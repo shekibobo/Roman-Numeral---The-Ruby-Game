@@ -3,9 +3,25 @@
 class RomanNumeral
   def self.to_arabic_numeral(roman)
     arabic = 0
-    values = { :i => 1, :v => 5, :x => 10, :l => 50, :c => 100, :d => 500, :m => 1000 }
+    v = { 'I' => 1, 'V' => 5, 'X' => 10, 'L' => 50, 'C' => 100, 'D' => 500, 'M' => 1000 }
+    prev = 0
 
-    roman.downcase.each_char.map{|c| values[c.to_sym]}.inject(&:+)
+    roman.each_char.map{|c| v[c]}.each do |i|
+      arabic += i <= prev ? prev : 0
+      prev = i <= prev ? i : i - prev
+    end
+    arabic + prev
+
+#    while !charvals.empty? do
+#      c = charvals.shift
+#
+#      if !charvals.first.nil? && c < charvals.first
+#        arabic += charvals.shift - c
+#      else
+#        arabic += c
+#      end
+#    end
+#    arabic
   end
 
 end
